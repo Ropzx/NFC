@@ -3,27 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Play Audio</title>
+    <title>Play Audio</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        #playButton {
+            font-size: 24px;
+            padding: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #playButton:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome</h1>
-    <p>If the audio doesn't play automatically, click anywhere on the page.</p>
+    <h1>Click the Button to Play Audio</h1>
+    <button id="playButton">Play Sound</button>
 
-    <audio id="audio" autoplay loop>
+    <audio id="audio" loop>
         <source src="https://uc0fee80b49ee0026edbca228834.dl.dropboxusercontent.com/cd/0/inline/ClW5DMgBrds_AKSwDP7MlJXNwabAdsM4S7oc2poxzKgKbivlZwvY2a8aZ0dhlTNfuKYHSL3BcUFatPGoeLbJfAWFpMhTIiQH7oYSfEhOK3V_waUGq6tQTkkJABlzCd3kFtizVBPgTI_62YV-5XzALZRi/file" type="audio/mpeg">
     </audio>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("playButton").addEventListener("click", () => {
             const audio = document.getElementById("audio");
-            audio.volume = 1.0; // Set volume to max
-
+            audio.volume = 1.0; // Set volume to full
             audio.play().catch(error => {
-                console.log("Autoplay blocked. Click anywhere to play.");
-            });
-
-            document.body.addEventListener("click", () => {
-                audio.play();
+                console.log("Error playing audio:", error);
             });
         });
     </script>
