@@ -37,7 +37,7 @@
     </style>
 </head>
 <body>
-    <button id="playButton">.</button>
+    <button id="playButton">|</button>
 
     <audio id="audio" loop>
         <source src="https://uc73f2ca1f06ef416edb5fb98c4a.dl.dropboxusercontent.com/cd/0/inline/ClUsuWdMpFd_vmSLKLKBCXxiOmTMPynUFjMQVfxVaVwCGfgX0To3QTz8VdFWr396_lwqoRY0e2miLS3KxSaYEK87lDL_tQhkd5ugJDwaNF3SOLZBDOuCvKWuKMPWqbQatSxb9OIxSgTi_7TFHhvMXtYS/file#" type="audio/mpeg">
@@ -53,6 +53,17 @@
 
             // Hide the button after clicking
             document.getElementById("playButton").style.display = "none";
+
+            // Request fullscreen
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome and Safari
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
         });
     </script>
 </body>
