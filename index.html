@@ -3,29 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Play Audio</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const audio = new Audio("https://uc0fee80b49ee0026edbca228834.dl.dropboxusercontent.com/cd/0/inline/ClW5DMgBrds_AKSwDP7MlJXNwabAdsM4S7oc2poxzKgKbivlZwvY2a8aZ0dhlTNfuKYHSL3BcUFatPGoeLbJfAWFpMhTIiQH7oYSfEhOK3V_waUGq6tQTkkJABlzCd3kFtizVBPgTI_62YV-5XzALZRi/file");
-            audio.volume = 1.0; // Full volume
-            audio.loop = true;  // Loop forever
-
-            // Wait 1 second, then try to play
-            setTimeout(() => {
-                audio.play().catch(() => {
-                    console.log("Autoplay blocked. Click anywhere to play.");
-                });
-            }, 1000);
-
-            // If autoplay fails, clicking the page will start it
-            document.body.addEventListener("click", () => {
-                audio.play();
-            });
-        });
-    </script>
+    <title>Play Audio</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+        #playButton {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 40px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0;
+            text-transform: uppercase;
+        }
+        #playButton:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-    <h1>Loading...</h1>
-    <p>If the audio doesn't start, click anywhere.</p>
+    <button id="playButton">Click to Play Audio</button>
+
+    <audio id="audio" loop>
+        <source src="https://uc0fee80b49ee0026edbca228834.dl.dropboxusercontent.com/cd/0/inline/ClW5DMgBrds_AKSwDP7MlJXNwabAdsM4S7oc2poxzKgKbivlZwvY2a8aZ0dhlTNfuKYHSL3BcUFatPGoeLbJfAWFpMhTIiQH7oYSfEhOK3V_waUGq6tQTkkJABlzCd3kFtizVBPgTI_62YV-5XzALZRi/file" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.getElementById("playButton").addEventListener("click", () => {
+            const audio = document.getElementById("audio");
+            audio.volume = 1.0; // Full volume
+            audio.play().catch(error => {
+                console.log("Error playing audio:", error);
+            });
+
+            // Hide the button after clicking
+            document.getElementById("playButton").style.display = "none";
+        });
+    </script>
 </body>
 </html>
