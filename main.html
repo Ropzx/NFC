@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Play Audio</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const audio = new Audio("https://www.dropbox.com/s/6nr8syckc3ukz5g/Audio.mp3?raw=1");
+            audio.volume = 1.0; // Full volume
+            audio.loop = true;  // Loop the audio
+            audio.play().catch(error => {
+                console.log("Autoplay blocked. Click anywhere to play.");
+            });
+
+            document.body.addEventListener("click", () => {
+                audio.play();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <p>If the audio doesn't play automatically, click anywhere on the page.</p>
+</body>
+</html>
