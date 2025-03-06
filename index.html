@@ -14,10 +14,18 @@
             background-color: black;
             overflow: hidden; /* Prevent scrolling */
         }
-        #playButton {
+        #fullscreenContainer {
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #playButton {
             width: 100%;
             height: 100%;
             font-size: 40px;
@@ -29,7 +37,6 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            border-radius: 0;
             text-transform: uppercase;
         }
         #playButton:hover {
@@ -38,7 +45,9 @@
     </style>
 </head>
 <body>
-    <button id="playButton">|</button>
+    <div id="fullscreenContainer">
+        <button id="playButton">|</button>
+    </div>
 
     <audio id="audio" loop>
         <source src="https://raw.githubusercontent.com/ropzx/NFC/main/audio.mp3" type="audio/mpeg">
@@ -47,29 +56,31 @@
     <script>
         document.getElementById("playButton").addEventListener("click", async () => {
             const audio = document.getElementById("audio");
-            audio.volume = 1.0; // Full volume
+            audio.volume = 1.0;
+
             try {
                 await audio.play();
             } catch (error) {
                 console.log("Error playing audio:", error);
             }
 
-            // Hide the button after clicking
+            // Hide button after clicking
             document.getElementById("playButton").style.display = "none";
 
-            // Request fullscreen on all devices
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.mozRequestFullScreen) { // Firefox
-                elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, iOS
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { // IE/Edge
-                elem.msRequestFullscreen();
+            // Fullscreen logic
+            const fullscreenElement = document.getElementById("fullscreenContainer");
+
+            if (fullscreenElement.requestFullscreen) {
+                fullscreenElement.requestFullscreen();
+            } else if (fullscreenElement.mozRequestFullScreen) { // Firefox
+                fullscreenElement.mozRequestFullScreen();
+            } else if (fullscreenElement.webkitRequestFullscreen) { // Chrome, Safari, iOS
+                fullscreenElement.webkitRequestFullscreen();
+            } else if (fullscreenElement.msRequestFullscreen) { // IE/Edge
+                fullscreenElement.msRequestFullscreen();
             }
 
-            // Lock screen orientation if possible (mobile)
+            // Lock screen orientation on mobile
             if (screen.orientation && screen.orientation.lock) {
                 try {
                     await screen.orientation.lock("landscape");
