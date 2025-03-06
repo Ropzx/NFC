@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Audio</title>
+    <title>Play Audio with Image</title>
     <style>
         body {
             margin: 0;
@@ -25,7 +25,14 @@
             justify-content: center;
             align-items: center;
         }
+        #backgroundImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* Hidden until button is clicked */
+        }
         #playButton {
+            position: absolute;
             width: 100%;
             height: 100%;
             font-size: 40px;
@@ -36,7 +43,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
             text-transform: uppercase;
         }
         #playButton:hover {
@@ -46,6 +52,7 @@
 </head>
 <body>
     <div id="fullscreenContainer">
+        <img id="backgroundImage" src="https://raw.githubusercontent.com/ropzx/NFC/main/image.png" alt="Background">
         <button id="playButton">|</button>
     </div>
 
@@ -56,7 +63,7 @@
     <script>
         document.getElementById("playButton").addEventListener("click", async () => {
             const audio = document.getElementById("audio");
-            audio.volume = 1.0;
+            const image = document.getElementById("backgroundImage");
 
             try {
                 await audio.play();
@@ -64,7 +71,8 @@
                 console.log("Error playing audio:", error);
             }
 
-            // Hide button after clicking
+            // Show image and hide button
+            image.style.display = "block";
             document.getElementById("playButton").style.display = "none";
 
             // Fullscreen logic
