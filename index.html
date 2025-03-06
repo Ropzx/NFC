@@ -12,6 +12,7 @@
             justify-content: center;
             align-items: center;
             background-color: black;
+            overflow: hidden; /* Prevent scrolling */
         }
         #playButton {
             position: absolute;
@@ -40,29 +41,41 @@
     <button id="playButton">|</button>
 
     <audio id="audio" loop>
-        <source src="https://www.dropbox.com/s/o6h7kebcw20qt6p/audio.mp3?st=2wgamgvb&raw=1" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/ropzx/NFC/main/audio.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        document.getElementById("playButton").addEventListener("click", () => {
+        document.getElementById("playButton").addEventListener("click", async () => {
             const audio = document.getElementById("audio");
             audio.volume = 1.0; // Full volume
-            audio.play().catch(error => {
+            try {
+                await audio.play();
+            } catch (error) {
                 console.log("Error playing audio:", error);
-            });
+            }
 
             // Hide the button after clicking
             document.getElementById("playButton").style.display = "none";
 
-            // Request fullscreen
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome and Safari
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
+            // Request fullscreen on all devices
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { // Firefox
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, iOS
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { // IE/Edge
+                elem.msRequestFullscreen();
+            }
+
+            // Lock screen orientation if possible (mobile)
+            if (screen.orientation && screen.orientation.lock) {
+                try {
+                    await screen.orientation.lock("landscape");
+                } catch (error) {
+                    console.log("Orientation lock not supported:", error);
+                }
             }
         });
     </script>
